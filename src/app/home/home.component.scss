@@ -1,0 +1,18 @@
+.background{
+  min-height: 100vh;
+  background-position: center;
+  background-size: cover;
+  background-image: linear-gradient(to right, #ee2c0a , #000000);
+}
+table tr td, table tr th{
+  font-size: 12px;
+}
+
+.invalid{
+  border: solid 1px #ee2c0a;
+}
+
+
+.ng-invalid.ng-touched{
+  border: solid 1px #ee2c0a;
+}

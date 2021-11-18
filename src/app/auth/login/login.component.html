@@ -1,0 +1,24 @@
+<form [formGroup]="loginForm" (ngSubmit)="submit()">
+<div class="background">
+  <div class="container h-100">
+    <div class="row h-100">
+      <div class="col-md-12 d-flex align-items-center">
+        <div class="card w-100 p-3">
+          <h2 class="text-center">Bem-vindo(a) ao CarStore</h2>
+          <div class="form-group">
+            <label for="emailInput">Login</label>
+            <input type="email" class="form-control" id="emailInput" formControlName="email" placeholder="suporte@carstore.com">
+          </div>
+          <div class="form-group mt-3">
+            <label for="passwordInput">Senha</label>
+            <input type="password" class="form-control" id="passwordInput" formControlName="password" placeholder="* * * * * *">
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-success mt-3 w-50">Entrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>

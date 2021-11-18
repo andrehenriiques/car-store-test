@@ -1,0 +1,152 @@
+<div class="background">
+  <div class="container pt-5">
+      <div class="col-md-12">
+        <div class="card">
+          <h2 class="text-center mt-4">Cadastro de Clientes</h2>
+          <div class="col-md-2">
+            <button routerLink="/" type="button" class="btn btn-danger float-right w-50 m-3">Sair</button>
+          </div>
+            <div class="col-md-6 m-3">
+              <form [formGroup]="clientForm" (ngSubmit)="submit()">
+              <div class="card shadow p-3">
+                <h2 class="text-center mt-4">{{ editMode ? 'Editar': 'Cadastrar Novo' }} Cliente</h2>
+                  <div class="form-group mt-3">
+                    <label for="name">Nome</label>
+                    <input type="text" class="form-control" id="name" placeholder="André H" formControlName="name">
+                  </div>
+                  <div class="form-group mt-3">
+                    <label for="name">CPF</label>
+                    <input type="text" class="form-control" id="name" placeholder="000.000.000-00" formControlName="cpf"
+                     [dropSpecialCharacters]="false" mask="000.000.000-00">
+                  </div>
+                  <div class="form-group mt-3">
+                    <label for="phone">Telefone</label>
+                    <input type="text" mask="(00) 00000-0000" class="form-control" id="phone" formControlName="phone"
+                     [dropSpecialCharacters]="false" placeholder="(XX) XXXXX-XXXX">
+                  </div>
+                  <div class="form-group mt-3">
+                    <label for="date">Data de Nascimento</label>
+                    <input type="date" class="form-control" id="date" formControlName="birth">
+                  </div>
+                  <div class="form-group mt-3">
+                    <label for="address">Endereço</label>
+                    <input type="text" class="form-control" id="address" placeholder="Rua..." formControlName="address">
+                  </div>
+                  <div class="form-group mt-3">
+                    <label>Veículo</label>
+                    <select class="form-control" formControlName="vehicle" (change)="getBrands()">
+                      <option selected value="">Selecione</option>
+                      <option value="caminhoes">Caminhões</option>
+                      <option value="carros">Carros</option>
+                      <option value="motos">Motos</option>
+                    </select>
+                  </div>
+                  <div class="form-group mt-3" *ngIf="valueVehicle">
+                    <label>Marca</label>
+                    <select class="form-control" formControlName="brand" (change)="getModules()">
+                      <option selected value="">Selecione</option>
+                      <option *ngFor="let item of listBrands" [value]="item?.codigo">{{ item?.nome }}</option>
+                    </select>
+                  </div>
+                  <div class="form-group mt-3" *ngIf="valueBrand">
+                    <label>Modelo do Veículo</label>
+                    <select class="form-control" formControlName="modelVehicle" (change)="getYearVehicle()">
+                      <option selected value="">Selecione</option>
+                      <option *ngFor="let item of listModules?.modelos" [value]="item?.codigo">{{ item?.nome }}</option>
+                    </select>
+                  </div>
+                  <div class="form-group mt-3" *ngIf="valueYear">
+                    <label>Ano do Veículo</label>
+                    <select class="form-control" formControlName="yearVehicle" (change)="getVehicleData()">
+                      <option selected value="">Selecione</option>
+                      <option *ngFor="let item of listYearsVehicle" [value]="item?.codigo">{{ item?.nome }}</option>
+                    </select>
+                  </div>
+                  <div class="row" *ngIf="vehicleData && clientForm.valid">
+                    <div class="col-md-6">
+                      <label class="mt-3">Valor</label>
+                      <p> {{ vehicleData?.Valor }} </p>
+                      <label class="mt-3">Marca</label>
+                      <p> {{ vehicleData?.Marca }} </p>
+                      <label class="mt-3">Modelo</label>
+                      <p> {{ vehicleData?.Modelo }} </p>
+                      <label class="mt-3">Ano do Modelo</label>
+                      <p> {{ vehicleData?.AnoModelo }} </p>
+                      <label class="mt-3">Combustível</label>
+                      <p> {{ vehicleData?.Combustivel }} </p>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="mt-3">Código Fipe</label>
+                      <p> {{ vehicleData?.CodigoFipe }} </p>
+                      <label class="mt-3">Mês de Referência</label>
+                      <p> {{ vehicleData?.MesReferencia }} </p>
+                      <label class="mt-3">Tipo do Veículo</label>
+                      <p> {{ vehicleData?.TipoVeiculo }} </p>
+                      <label class="mt-3">Sigla do Combustível</label>
+                      <p> {{ vehicleData?.SiglaCombustivel }} </p>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success mt-3 w-50">Salvar Informações</button>
+                  </div>
+              </div>
+            </form>
+            </div>
+            <ng-container *ngIf="!editMode">
+              <h2 class="text-center mt-4">Lista dos Clientes Cadastrados</h2>
+              <div class="col-md-12 table-responsive p-5">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Telefone</th>
+                        <th scope="col">Data de Nascimento</th>
+                        <th scope="col">Endereço</th>
+                        <th scope="col">Marca Veículo</th>
+                        <th scope="col">Modelo Veículo</th>
+                        <th scope="col">Valor Veículo</th>
+                        <th scope="col">Ano Veículo</th>
+                        <th scope="col">Combustível Veículo</th>
+                        <th scope="col">Código Fipe Veículo</th>
+                        <th scope="col">Mês de Referência do Veículo</th>
+                        <th scope="col">Tipo do Veículo</th>
+                        <th scope="col">Sigla do Combustível</th>
+                        <th scope="col">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="!listClientsStorage?.length">
+                        <td class="text-center" colspan="15">Nenhum dado encontrado !</td>
+                      </tr>
+                      <tr *ngFor="let item of listClientsStorage">
+                        <td>{{ item?.name }}</td>
+                        <td>{{ item?.cpf }}</td>
+                        <td>{{ item?.phone }}</td>
+                        <td>{{ item?.birth }}</td>
+                        <td>{{ item?.address }}</td>
+                        <td>{{ item?.carInfo?.Marca }}</td>
+                        <td>{{ item?.carInfo?.Modelo }}</td>
+                        <td>{{ item?.carInfo?.Valor }}</td>
+                        <td>{{ item?.carInfo?.AnoModelo }}</td>
+                        <td>{{ item?.carInfo?.Combustivel }}</td>
+                        <td>{{ item?.carInfo?.CodigoFipe }}</td>
+                        <td>{{ item?.carInfo?.MesReferencia }}</td>
+                        <td>{{ item?.carInfo?.TipoVeiculo }}</td>
+                        <td>{{ item?.carInfo?.SiglaCombustivel }}</td>
+                        <td>
+                          <div class="d-flex align-items-center justify-between">
+                            <button (click)="editItem(item.id)" type="button" class="btn btn-warning mr-2">Editar</button>
+                            <button (click)="deleteItem(item.id)" type="button" class="btn btn-danger ml-2">Excluir</button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </ng-container>
+
+          </div>
+    </div>
+  </div>
+</div>
